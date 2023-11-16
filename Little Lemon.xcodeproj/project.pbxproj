@@ -50,6 +50,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3B54643E2B06A80F005C5589 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3BA1F9E02B058D1900E78787 /* Onboarding.swift */,
+				3BA1F9E62B05905D00E78787 /* UserProfile.swift */,
+				3BA1F9E22B058EFC00E78787 /* Home.swift */,
+				3BA1F9E42B058F1800E78787 /* Menu.swift */,
+				3B54643C2B067260005C5589 /* MenuItemDetailView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3B54643F2B06A83A005C5589 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				3BA1F9F02B065E3500E78787 /* ExampleDatabase.xcdatamodeld */,
+				3BA1F9EA2B0654B300E78787 /* Persistence.swift */,
+				3BA1F9E82B0653CF00E78787 /* FetchedObjects.swift */,
+				3BA1F9EC2B0658AD00E78787 /* MenuList.swift */,
+				3BA1F9EE2B0658B800E78787 /* MenuItem.swift */,
+			);
+			path = "Core Data";
+			sourceTree = "<group>";
+		};
 		3BD763852B058AB2002689CE = {
 			isa = PBXGroup;
 			children = (
@@ -70,16 +94,8 @@
 			isa = PBXGroup;
 			children = (
 				3BD763912B058AB2002689CE /* Little_LemonApp.swift */,
-				3BA1F9E02B058D1900E78787 /* Onboarding.swift */,
-				3BA1F9E62B05905D00E78787 /* UserProfile.swift */,
-				3BA1F9E22B058EFC00E78787 /* Home.swift */,
-				3BA1F9F02B065E3500E78787 /* ExampleDatabase.xcdatamodeld */,
-				3BA1F9E82B0653CF00E78787 /* FetchedObjects.swift */,
-				3BA1F9EC2B0658AD00E78787 /* MenuList.swift */,
-				3BA1F9EE2B0658B800E78787 /* MenuItem.swift */,
-				3BA1F9EA2B0654B300E78787 /* Persistence.swift */,
-				3BA1F9E42B058F1800E78787 /* Menu.swift */,
-				3B54643C2B067260005C5589 /* MenuItemDetailView.swift */,
+				3B54643E2B06A80F005C5589 /* Views */,
+				3B54643F2B06A83A005C5589 /* Core Data */,
 				3BD763952B058AB3002689CE /* Assets.xcassets */,
 				3BD763972B058AB3002689CE /* Preview Content */,
 			);
