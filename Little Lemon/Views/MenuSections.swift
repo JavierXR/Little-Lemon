@@ -8,20 +8,28 @@
 import SwiftUI
 
 
+struct MenuSections: View{
+    @Binding var selectedCategories: Set<String>
 
-struct MenuSections: View, Observable{
     var body: some View {
-        
-        HStack{
-            MenuButton(name: "Starters")
-            MenuButton(name: "Mains")
-            MenuButton(name: "Desserts")
-            MenuButton(name: "Drinks")
+        VStack {
+            Text("ORDER FOR DELIVERY")
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .font(.LLSectionTitle)
+            HStack{
+                MenuButton(name: "Starters", selectedCategories: $selectedCategories)
+                MenuButton(name: "Mains", selectedCategories: $selectedCategories)
+                MenuButton(name: "Desserts", selectedCategories: $selectedCategories)
+                MenuButton(name: "Drinks", selectedCategories: $selectedCategories)
+            }
+            .frame(maxWidth: .infinity)
+            Divider()
         }
-        .frame(maxWidth: .infinity)
+
+        .padding()
     }
 }
 
-#Preview {
-    MenuSections()
-}
+//#Preview {
+//    MenuSections()
+//}

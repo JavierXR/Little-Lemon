@@ -14,7 +14,7 @@ struct Home: View {
     
     var body: some View {
         
-        /// Original excercises asked for TabView navigation, wireframe and screenshot examples have Stack navigation.
+        // Original excercises asked for TabView navigation, wireframe and screenshot examples have Stack navigation.
         //        TabView{
         //            Menu()
         //                .tabItem { Label("Menu", systemImage: "list.dash") }
@@ -53,6 +53,7 @@ struct Home: View {
                     dismiss()
                 }
             }
+            .navigationBarTitleDisplayMode(.inline)
     }
 }
 

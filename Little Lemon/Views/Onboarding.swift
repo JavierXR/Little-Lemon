@@ -21,16 +21,21 @@ struct Onboarding: View {
     
     var body: some View {
         NavigationStack {
-            VStack(spacing: 30){
+            VStack{
+                Hero(searchText: .constant(""), includeTextField: false) // TODO: Add a convinience init()
+                    .frame(maxHeight: 300)
+
                 Form{
                     FormFieldItem(Section: "First Name", TextValue: $firstName)
                     FormFieldItem(Section: "Last Name", TextValue: $lastName)
-                    FormFieldItem(Section: "Email", TextValue: $email)
+                    FormFieldItem(Section: "Email ", TextValue: $email)
                 }
                 .font(.LLLead)
                 .formStyle(.columns)
                 .textFieldStyle(.roundedBorder)
-
+                .padding()
+                .layoutPriority(1)
+                
                 Button("Register") {
                     // TODO: Add email validation (inline?)
                     if (!firstName.isEmpty &&
@@ -44,16 +49,27 @@ struct Onboarding: View {
                     }
                 }
                 .buttonStyle(PrimaryButtonStyle())
+                .font(.LLLead)
+                .padding()
+                
             }
             .onAppear{
                 if (UserDefaults.standard.bool(forKey: kIsLoggedIn)){
                     isLoggedIn = true
                 }
             }
-            .padding()
             .navigationDestination(isPresented: $isLoggedIn) {
                 Home()
             }
+            .toolbar{
+                ToolbarItem(placement: .principal) {
+                    Image("Logo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 200, height: 35)
+                }
+            }
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }

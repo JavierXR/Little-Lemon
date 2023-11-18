@@ -74,6 +74,10 @@ struct UserProfile: View {
                     .transformEffect(.init(translationX: 0, y: 50))
             }
             Button("Logout"){
+                UserDefaults.standard.set("", forKey: kFirstName)
+                UserDefaults.standard.set("", forKey: kLastName)
+                UserDefaults.standard.set("", forKey: kEmail)
+                
                 UserDefaults.standard.set(false, forKey: kIsLoggedIn)
                 dismiss()
             }
@@ -107,8 +111,8 @@ struct UserProfile: View {
             ToolbarItem(placement: .principal) {
                 Image("Logo")
                     .resizable()
-                    .scaledToFill()
-                    .frame(width: 200, height: 40)
+                    .scaledToFit()
+                    .frame(width: 200, height: 35)
             }
             ToolbarItem(placement: .topBarLeading) {
                 Button(role: .cancel) {
@@ -125,6 +129,7 @@ struct UserProfile: View {
             emailF = email ?? ""
         }
         .navigationBarBackButtonHidden(true)
+        .navigationBarTitleDisplayMode(.inline)
     } // End body
     
 }

@@ -11,6 +11,7 @@ import SwiftUI
 struct Menu: View {
     @Environment(\.managedObjectContext) private var viewContext
     @State var searchText = ""
+    @State var selectedCategories: Set = [""]
     
     func getMenuData() async {
         
@@ -44,6 +45,7 @@ struct Menu: View {
                 dish.category = item.category
                 dish.summary = item.summary
                 dish.id = Int64(item.id)
+//                print("Dish category: \(dish.category)")
             }
 //            try? viewContext.save()
         } catch{
@@ -58,26 +60,24 @@ struct Menu: View {
     }
     
     func buildPredicate() -> NSPredicate {
-        // TODO: Add menu categories filtering
-        if searchText.isEmpty {
+        // TODO: Finish Category filtering
+        if searchText.isEmpty /*&& selectedCategories.isEmpty*/{
             return NSPredicate(value: true)
         }
+//        if selectedCategories.contains("Starters"){
+//            return NSPredicate(format: "(title CONTAINS[cd] %@) AND (category CONTAINS[cd] %@)", searchText, "Starters")
+//        }
+ 
         return NSPredicate(format: "title CONTAINS[cd] %@", searchText)
 //        return NSPredicate(format: "title MATCHES[cd] %@", searchText) // TODO: Exact match option
     }
     
     var body: some View {
         VStack{
-            
-//            NavigationBar()
-//                .frame(alignment:.center)
-//                .ignoresSafeArea()
-//                .padding()
-//                .background(.primary2)
-            
+
             Hero(searchText: $searchText)
-            
-            MenuSections()
+                
+            MenuSections(selectedCategories: $selectedCategories)
                 .background(.white)
             
             FetchedObjects(predicate: buildPredicate(), sortDescriptors: buildSortDescriptors()) { (dishes: [Dish]) in
@@ -90,6 +90,12 @@ struct Menu: View {
                                     Text(dish.title ?? "?")
                                         .font(.LLCardTitle)
                                         .frame(maxWidth: .infinity, alignment: .leading)
+                                    Text("")
+                                    Text(dish.summary ?? "Item served fresh")
+                                        .lineLimit(2)
+                                        .font(.LLParagraph)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    Text("")
                                     Text("$" + (dish.price ?? "100"))
                                         .font(.LLHightlight)
                                         .frame(maxWidth: .infinity, alignment: .leading)

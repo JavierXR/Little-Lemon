@@ -11,6 +11,8 @@ struct MenuButton: View {
     @State var toggled: Bool = false
     @State var name = ""
     
+    @Binding var selectedCategories: Set<String>
+    
     var body: some View {
         Text(name)
             .font(.LLLead)
@@ -21,11 +23,17 @@ struct MenuButton: View {
             .clipShape(.buttonBorder) // TODO: Define custom shape with border
             .onTapGesture {
                 toggled.toggle()
+                if toggled {
+                    selectedCategories.insert(name)
+                } else {
+                    selectedCategories.remove(name)
+                }
+                
             }
     }
     
 }
 
-#Preview {
-    MenuButton(name: "Long button name" )
-}
+//#Preview {
+//    MenuButton(name: "Long button name", selectedCategories: .constant(["d"]) )
+//}

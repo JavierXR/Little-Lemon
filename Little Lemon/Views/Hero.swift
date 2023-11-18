@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Header: View {
-
+    
     var body: some View {
         Text("")
     }
@@ -16,11 +16,12 @@ struct Header: View {
 
 struct Hero: View {
     @Binding var searchText: String
+    var includeTextField = true
     
     var body: some View {
         ZStack{
             Color.primary1
-
+            
             VStack {
                 Text("Little Lemon")
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -46,14 +47,18 @@ struct Hero: View {
                         .frame(width:150, height: 150)
                         .clipShape(.rect(cornerRadii: .init(topLeading: 10,bottomLeading: 10,bottomTrailing: 10,topTrailing: 10)))
                 }
-                TextField("Search menu", text: $searchText) // TODO: .searchable() alternative?
-                    .font(.LLLead) // verify
-                    .padding()
-                    .background(.highlight1)
-                    .clipShape(.buttonBorder)
-            }
-            .padding()
-        }
+                if  includeTextField {
+                    TextField("Search menu", text: $searchText ) // TODO: Add Magnifying Icon
+                        .font(.LLLead) // verify
+                        .padding()
+                        .background(.highlight1)
+                        .clipShape(.buttonBorder)
+                        .padding(.bottom, 8)
+                }
+
+            } // End VStack
+            .padding([.horizontal], 8)
+        } // End ZStack
     }
 }
 
@@ -101,7 +106,7 @@ public extension Font {
     static var LLSectionCategories: Font {
         let uiFontDescriptor = UIFontDescriptor(fontAttributes: [.name: "Karla-VariableFont_wght"])
         let newUIFont = UIFont(descriptor: uiFontDescriptor, size: 16)
-        var font = Font(newUIFont)
+        let font = Font(newUIFont)
             .weight(.heavy) // TODO: Extra bold (same as heavy?)
         return font
     }
