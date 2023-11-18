@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-let kFirstName = "first name key"
-let kLastName = "last name key"
-let kEmail = "email key"
+let kFirstName = "First Name"
+let kLastName = "Last Name"
+let kEmail = "Email"
 let kIsLoggedIn = "kIsLoggedIn"
 
 struct Onboarding: View {
@@ -21,11 +21,16 @@ struct Onboarding: View {
     
     var body: some View {
         NavigationStack {
-            VStack{
-                TextField("First Name",text: $firstName)
-                TextField("Last Name",text: $lastName)
-                TextField("Email",text: $email)
-                
+            VStack(spacing: 30){
+                Form{
+                    FormFieldItem(Section: "First Name", TextValue: $firstName)
+                    FormFieldItem(Section: "Last Name", TextValue: $lastName)
+                    FormFieldItem(Section: "Email", TextValue: $email)
+                }
+                .font(.LLLead)
+                .formStyle(.columns)
+                .textFieldStyle(.roundedBorder)
+
                 Button("Register") {
                     // TODO: Add email validation (inline?)
                     if (!firstName.isEmpty &&
@@ -37,8 +42,8 @@ struct Onboarding: View {
                         isLoggedIn = true
                         UserDefaults.standard.set(true, forKey: kIsLoggedIn)
                     }
-                    
                 }
+                .buttonStyle(PrimaryButtonStyle())
             }
             .onAppear{
                 if (UserDefaults.standard.bool(forKey: kIsLoggedIn)){
@@ -50,8 +55,6 @@ struct Onboarding: View {
                 Home()
             }
         }
-        
-        
     }
 }
 

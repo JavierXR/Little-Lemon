@@ -11,7 +11,7 @@ struct MenuItemDetailView: View {
     let dish: Dish
     var body: some View {
         // TODO: Add more details and stylize
-        VStack{
+        VStack(spacing: 8){
             Text(dish.title ?? "Default Title")
                 .font(.title)
                 .bold()

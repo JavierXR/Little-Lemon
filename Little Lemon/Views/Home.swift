@@ -8,21 +8,56 @@
 import SwiftUI
 
 struct Home: View {
-//    let persistence = PersistenceController()
+    @State var profileTapped = false
+    
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        TabView{
-            Menu()
-                .tabItem { Label("Menu", systemImage: "list.dash") } 
-                .environment(\.managedObjectContext, persistence.container.viewContext) 
-            UserProfile()
-                .tabItem { Label("Profile", systemImage: "square.and.pencil") }
-        }
-        .navigationBarBackButtonHidden(true)
+        
+        /// Original excercises asked for TabView navigation, wireframe and screenshot examples have Stack navigation.
+        //        TabView{
+        //            Menu()
+        //                .tabItem { Label("Menu", systemImage: "list.dash") }
+        //                .environment(\.managedObjectContext, persistence.container.viewContext)
+        //            UserProfile()
+        //                .tabItem { Label("Profile", systemImage: "square.and.pencil") }
+        //        }
+        
+        Menu()
+            .environment(\.managedObjectContext, persistence.container.viewContext)
+            .navigationBarBackButtonHidden(true)
+            .navigationDestination(isPresented: $profileTapped){
+                UserProfile()
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing){
+                    Image("profile-image-placeholder")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 40, height: 40)
+                        .onTapGesture {
+                            profileTapped.toggle()
+                            print("Image tapped")
+                        }
+                }
+                ToolbarItem(placement: .principal) {
+                    Image("Logo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 200, height: 35)
+                }
+            }
+            .onAppear{
+                // TODO: Pop to root (onboarding) screen instead of double dismiss().
+                if !UserDefaults.standard.bool(forKey: kIsLoggedIn) {
+                    dismiss()
+                }
+            }
     }
 }
 
 #Preview {
-    Home()
+    NavigationStack {
+        Home()
+    }
 }
-

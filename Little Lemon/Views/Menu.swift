@@ -7,45 +7,48 @@
 
 import SwiftUI
 
+@MainActor
 struct Menu: View {
     @Environment(\.managedObjectContext) private var viewContext
     @State var searchText = ""
     
-    func getMenuData(){
+    func getMenuData() async {
         
-        PersistenceController.shared.clear() // TODO: Use an exists() validator instead
+//        PersistenceController.shared.clear()
         
         let url = URL(string: "https://raw.githubusercontent.com/Meta-Mobile-Developer-PC/Working-With-Data-API/main/menu.json")!
         let request = URLRequest(url: url)
         
-        /*
-         TODO: instead of .dataTask, use .data concurrency (await/async):
-             -let (data, _) = try await urlSession.data(from: url)
-                - use do/catch with proper error handling
-         */
-        let data = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let data = data {
-                print("Data recieved")
-                let decoder = JSONDecoder()
-                let decodedData = try? decoder.decode(MenuList.self, from: data)
+        do {
+            let (data, _) = try await URLSession.shared.data(for: request)
+            
+            print("Data recieved")
+            let decoder = JSONDecoder()
+            let menuList = try decoder.decode(MenuList.self, from: data)
+            
+            
+            for item in menuList.menu {
                 
-                if let menuList = decodedData {
-                    // Is menuList.menu.forEach() a better alternative?
-                    for item in menuList.menu {
-                        let dish = Dish(context: viewContext)
-                        dish.title = item.title
-                        dish.image = item.image
-                        dish.price = item.price
-                        dish.category = item.category
-                        dish.summary = item.summary
-                        dish.id = Int64(item.id)
-                    }
-                    try? viewContext.save() // TODO: test if this is necessary, especially after adding an exists() validator.
+                // Checking if object with title exists
+                let titles:[String] = viewContext.registeredObjects.map({ NSManagedObject in
+                    (NSManagedObject as? Dish)?.title ?? ""
+                })
+                if titles.contains(item.title) {
+                    continue
                 }
-                
+                    
+                let dish = Dish(context: viewContext)
+                dish.title = item.title
+                dish.image = item.image
+                dish.price = item.price
+                dish.category = item.category
+                dish.summary = item.summary
+                dish.id = Int64(item.id)
             }
+//            try? viewContext.save()
+        } catch{
+            print("Error while fetching data: \(error)")
         }
-        data.resume()
     }
     
     func buildSortDescriptors() -> [NSSortDescriptor]{
@@ -55,20 +58,27 @@ struct Menu: View {
     }
     
     func buildPredicate() -> NSPredicate {
+        // TODO: Add menu categories filtering
         if searchText.isEmpty {
             return NSPredicate(value: true)
         }
         return NSPredicate(format: "title CONTAINS[cd] %@", searchText)
+//        return NSPredicate(format: "title MATCHES[cd] %@", searchText) // TODO: Exact match option
     }
     
     var body: some View {
         VStack{
-            Text("Little Lemon")
-            Text("Chicago")
-            Text("A Little Lemon App")
             
-            TextField("Search menu", text: $searchText) // TODO: .searchable() alternative?
-                .padding()
+//            NavigationBar()
+//                .frame(alignment:.center)
+//                .ignoresSafeArea()
+//                .padding()
+//                .background(.primary2)
+            
+            Hero(searchText: $searchText)
+            
+            MenuSections()
+                .background(.white)
             
             FetchedObjects(predicate: buildPredicate(), sortDescriptors: buildSortDescriptors()) { (dishes: [Dish]) in
                 List{
@@ -78,8 +88,10 @@ struct Menu: View {
                                 // TODO: Improve layout and add a default image (currently 2 image links are broken)
                                 VStack{
                                     Text(dish.title ?? "?")
+                                        .font(.LLCardTitle)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     Text("$" + (dish.price ?? "100"))
+                                        .font(.LLHightlight)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                 }
                                 Spacer()
@@ -97,9 +109,9 @@ struct Menu: View {
                 .listStyle(.plain)
             }
             
-        }
-        .onAppear{
-           getMenuData()
+        } // End of VStack
+        .task{
+            await getMenuData()
         }
     }
 }
