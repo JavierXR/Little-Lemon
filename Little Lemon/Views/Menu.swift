@@ -11,11 +11,11 @@ import SwiftUI
 struct Menu: View {
     @Environment(\.managedObjectContext) private var viewContext
     @State var searchText = ""
-    @State var selectedCategories: Set = [""]
+    @State var selectedCategories: Set = ["Starters", "Mains", "Desserts", "Drinks"]
     
     func getMenuData() async {
         
-//        PersistenceController.shared.clear()
+        //        PersistenceController.shared.clear()
         
         let url = URL(string: "https://raw.githubusercontent.com/Meta-Mobile-Developer-PC/Working-With-Data-API/main/menu.json")!
         let request = URLRequest(url: url)
@@ -37,17 +37,16 @@ struct Menu: View {
                 if titles.contains(item.title) {
                     continue
                 }
-                    
+                
                 let dish = Dish(context: viewContext)
                 dish.title = item.title
                 dish.image = item.image
-                dish.price = item.price
+                dish.price = Float(item.price) ?? 0
                 dish.category = item.category
                 dish.summary = item.summary
                 dish.id = Int64(item.id)
-//                print("Dish category: \(dish.category)")
             }
-//            try? viewContext.save()
+            //            try? viewContext.save()
         } catch{
             print("Error while fetching data: \(error)")
         }
@@ -61,16 +60,75 @@ struct Menu: View {
     
     func buildPredicate() -> NSPredicate {
         // TODO: Finish Category filtering
-        if searchText.isEmpty /*&& selectedCategories.isEmpty*/{
+        
+        print("Selected categories: \(selectedCategories)")
+        
+        if searchText.isEmpty &&
+            selectedCategories.contains("Starters") &&
+            selectedCategories.contains("Mains") &&
+            selectedCategories.contains("Desserts") &&
+            selectedCategories.contains("Drinks"){
             return NSPredicate(value: true)
         }
-//        if selectedCategories.contains("Starters"){
-//            return NSPredicate(format: "(title CONTAINS[cd] %@) AND (category CONTAINS[cd] %@)", searchText, "Starters")
-//        }
- 
-        return NSPredicate(format: "title CONTAINS[cd] %@", searchText)
-//        return NSPredicate(format: "title MATCHES[cd] %@", searchText) // TODO: Exact match option
-    }
+        
+        if selectedCategories.isEmpty{
+            return NSPredicate(value: false)
+        }
+        
+        var predicateString = ""
+        
+        let numOfCategories = selectedCategories.count
+        var predicatesAdded = 0
+        
+        if selectedCategories.contains("Starters"){
+            if searchText.isEmpty {
+                predicateString += String(format: "(category CONTAINS[cd] \"Starters\")", searchText)
+            } else {
+                predicateString += String(format: "(title CONTAINS[cd] \"%@\" AND category CONTAINS[cd] \"Starters\")", searchText)
+            }
+            predicatesAdded += 1
+            if predicatesAdded < numOfCategories {
+                predicateString += " OR "
+            }
+        }
+        if selectedCategories.contains("Mains"){
+            if searchText.isEmpty {
+                predicateString += String(format: "(category CONTAINS[cd] \"Mains\")", searchText)
+            } else {
+                predicateString += String(format: "(title CONTAINS[cd] \"%@\" AND category CONTAINS[cd] \"Mains\")", searchText)
+            }
+            predicatesAdded += 1
+            if predicatesAdded < numOfCategories {
+                predicateString += " OR "
+            }
+        }
+        if selectedCategories.contains("Desserts"){
+            if searchText.isEmpty {
+                predicateString += String(format: "(category CONTAINS[cd] \"Desserts\")", searchText)
+            } else {
+                predicateString += String(format: "(title CONTAINS[cd] \"%@\" AND category CONTAINS[cd] \"Deserts\")", searchText)
+            }
+            predicatesAdded += 1
+            if predicatesAdded < numOfCategories {
+                predicateString += " OR "
+            }
+        }
+        if selectedCategories.contains("Drinks"){
+            if searchText.isEmpty {
+                predicateString += String(format: "(category CONTAINS[cd] \"Drinks\")", searchText)
+            } else {
+                predicateString += String(format: "(title CONTAINS[cd] \"%@\" AND category CONTAINS[cd] \"Drinks\")", searchText)
+            }
+            predicatesAdded += 1
+            if predicatesAdded < numOfCategories {
+                predicateString += " OR "
+            }
+        }
+        
+        var predicate: NSPredicate
+        predicate = NSPredicate(format: predicateString)
+        return predicate
+}
     
     var body: some View {
         VStack{
@@ -96,7 +154,9 @@ struct Menu: View {
                                         .font(.LLParagraph)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     Text("")
-                                    Text("$" + (dish.price ?? "100"))
+                                    
+                                    
+                                    Text("$" + String(format:"%.0f",dish.price) )
                                         .font(.LLHightlight)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                 }

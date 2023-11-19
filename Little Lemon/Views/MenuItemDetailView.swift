@@ -27,7 +27,7 @@ struct MenuItemDetailView: View {
     dish.title = "Dish Title"
     dish.category = "starters"
     dish.image = "image url"
-    dish.price = "10"
+    dish.price = 10
     dish.summary = "Default summary"
     return MenuItemDetailView(dish: dish)
 }

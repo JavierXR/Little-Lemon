@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MenuButton: View {
-    @State var toggled: Bool = false
+    @State var toggled: Bool = true
     @State var name = ""
     
     @Binding var selectedCategories: Set<String>
@@ -28,7 +28,6 @@ struct MenuButton: View {
                 } else {
                     selectedCategories.remove(name)
                 }
-                
             }
     }
     
