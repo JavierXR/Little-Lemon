@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B2851262B0AF3E100C7D693 /* ProfileIconPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2851252B0AF3E100C7D693 /* ProfileIconPicker.swift */; };
 		3B4BD7492B08181400C4A009 /* Karla-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B4BD7482B08181400C4A009 /* Karla-Regular.ttf */; };
 		3B4BD74B2B08182700C4A009 /* Karla-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B4BD74A2B08182700C4A009 /* Karla-VariableFont_wght.ttf */; };
 		3B54643D2B067260005C5589 /* MenuItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B54643C2B067260005C5589 /* MenuItemDetailView.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3B2851252B0AF3E100C7D693 /* ProfileIconPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileIconPicker.swift; sourceTree = "<group>"; };
 		3B4BD7482B08181400C4A009 /* Karla-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Karla-Regular.ttf"; sourceTree = "<group>"; };
 		3B4BD74A2B08182700C4A009 /* Karla-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Karla-VariableFont_wght.ttf"; sourceTree = "<group>"; };
 		3B54643C2B067260005C5589 /* MenuItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemDetailView.swift; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 		3B54643E2B06A80F005C5589 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3B2851252B0AF3E100C7D693 /* ProfileIconPicker.swift */,
 				3BFB403F2B084A100098BB58 /* MenuButton.swift */,
 				3BFB403D2B082DDD0098BB58 /* MenuSections.swift */,
 				3BA1F9E02B058D1900E78787 /* Onboarding.swift */,
@@ -241,6 +244,7 @@
 				3B54643D2B067260005C5589 /* MenuItemDetailView.swift in Sources */,
 				3BA1F9EF2B0658B800E78787 /* MenuItem.swift in Sources */,
 				3BA1F9E52B058F1800E78787 /* Menu.swift in Sources */,
+				3B2851262B0AF3E100C7D693 /* ProfileIconPicker.swift in Sources */,
 				3BD763922B058AB2002689CE /* Little_LemonApp.swift in Sources */,
 				3B5464412B06C519005C5589 /* Hero.swift in Sources */,
 			);

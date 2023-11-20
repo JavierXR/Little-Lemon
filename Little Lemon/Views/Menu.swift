@@ -21,7 +21,6 @@ struct Menu: View {
         do {
             let (data, _) = try await URLSession.shared.data(for: request)
             
-            print("Data recieved")
             let decoder = JSONDecoder()
             let menuList = try decoder.decode(MenuList.self, from: data)
             
@@ -56,11 +55,7 @@ struct Menu: View {
                                  selector: #selector(NSString.localizedStandardCompare))]
     }
     
-    func buildPredicate() -> NSPredicate {
-        // TODO: Finish Category filtering
-        
-        print("Selected categories: \(selectedCategories)")
-        
+    func buildPredicate() -> NSPredicate {                
         if searchText.isEmpty &&
             selectedCategories.contains("Starters") &&
             selectedCategories.contains("Mains") &&

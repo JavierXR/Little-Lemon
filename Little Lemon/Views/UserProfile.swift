@@ -13,6 +13,7 @@ struct UserProfile: View {
     let firstNameDefault = UserDefaults.standard.string(forKey: kFirstName)
     let lastNameDefault = UserDefaults.standard.string(forKey: kLastName)
     let emailDefault = UserDefaults.standard.string(forKey: kEmail)
+    let largeImageNameDefault = UserDefaults.standard.string(forKey: kProfileImage)
     
     let orderStatusDefault = UserDefaults.standard.bool(forKey: kOrderStatus)
     let passwordChangesDefault = UserDefaults.standard.bool(forKey: kPasswordChanges)
@@ -28,25 +29,48 @@ struct UserProfile: View {
     @State var specialOffersField = false
     @State var newsletterField = false
     
+    @State var discardAlert = false
+    @State var savedAlert = false
+    
+    @State var showProfilePicker = false
+    
+    @State var largeImageName: String = UserDefaults.standard.string(forKey: kProfileImage) ?? "UserProfile.swift Error"
+    
+    @Binding var navProfileImage: String
+    
     var body: some View {
         VStack{
             Text("Personal Information")
                 .font(.LLLead)
                 .frame(maxWidth: .infinity, alignment: .leading)
             HStack{
-                Image("profile-image-placeholder")
-                    .resizable()
-                    .frame(width:75, height: 75, alignment: .leading)
-                    .clipShape(Circle()) // remove white background in Dark mode
+                
+                // LARGE PROFILE IMAGE/ICON *
+                if largeImageName == "profile-image-placeholder" {
+                    Image("profile-image-placeholder")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width:75, height: 75, alignment: .leading)
+                        .clipShape(Circle())
+                } else {
+                    Image(systemName: largeImageName )
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width:75, height: 75, alignment: .leading)
+                }
                 Button("Change"){
+                    showProfilePicker = true
                 }
                 .font(.LLHightlight)
                 .padding()
                 .foregroundStyle(.highlight1)
                 .background(.primary1)
                 .clipShape(.buttonBorder)
-                
+                .sheet(isPresented:$showProfilePicker) {
+                    ProfileIconPicker(showProfilePicker: $showProfilePicker, largeImageName: $largeImageName)
+                }
                 Button("Remove"){
+                    largeImageName = "person.crop.circle"
                 }
                 .font(.LLHightlight)
                 .padding()
@@ -85,6 +109,7 @@ struct UserProfile: View {
                 UserDefaults.standard.set("", forKey: kEmail)
                 
                 UserDefaults.standard.set(false, forKey: kIsLoggedIn)
+                UserDefaults.standard.set("profile-image-placeholder", forKey: kProfileImage)
                 dismiss()
             }
             .buttonStyle(PrimaryButtonStyle())
@@ -92,16 +117,59 @@ struct UserProfile: View {
             
             HStack(spacing: 15){
                 Button("Discard changes"){
-                    // TODO: Discard Form Changes
+                    firstNameField = UserDefaults.standard.string(forKey: kFirstName) ?? ""
+                    lastNameField = UserDefaults.standard.string(forKey: kLastName) ?? ""
+                    emailField = UserDefaults.standard.string(forKey: kEmail) ?? ""
+                    largeImageName = UserDefaults.standard.string(forKey: kProfileImage) ?? "nil-coalescing"
+                    
+                    orderStatusField = UserDefaults.standard.bool(forKey: kOrderStatus)
+                    passwordChangesField = UserDefaults.standard.bool(forKey: kPasswordChanges)
+                    specialOffersField = UserDefaults.standard.bool(forKey: kSpecialOffers)
+                    newsletterField = UserDefaults.standard.bool(forKey: kNewsletter)
+                    discardAlert.toggle()
                 }
                 .buttonStyle(FilterButtonStyle(padding: 16))
                 .font(.LLHightlight)
+                .alert(
+                    "Success",
+                    isPresented: $discardAlert
+                ) {
+                    Button("OK") {
+                    }
+                } message: {
+                    //TODO: if no changes were made, display error message
+                    Text("Changes were discarded.")
+                }
                 
                 Button("Save changes"){
-                    // TODO: Save Form Changes
+                    UserDefaults.standard.set(firstNameField, forKey: kFirstName)
+                    UserDefaults.standard.set(lastNameField, forKey: kLastName)
+                    UserDefaults.standard.set(emailField, forKey: kEmail)
+                    UserDefaults.standard.set(orderStatusField, forKey: kOrderStatus)
+                    UserDefaults.standard.set(passwordChangesField, forKey: kPasswordChanges)
+                    UserDefaults.standard.set(specialOffersField, forKey: kSpecialOffers)
+                    UserDefaults.standard.set(newsletterField, forKey: kNewsletter)
+                    
+                    //SAVING IMAGE STRING TO DEFAULTS ***
+                    UserDefaults.standard.set(largeImageName, forKey: kProfileImage)
+                    
+                    // Prevent icon flash? ***
+                    navProfileImage = largeImageName
+                    
+                    savedAlert.toggle()
                 }
                 .buttonStyle(FilterButtonStyle(padding: 16))
                 .font(.LLHightlight)
+                .alert(
+                    "Success",
+                    isPresented: $savedAlert
+                ) {
+                    Button("OK") {
+                    }
+                } message: {
+                    //TODO: if no changes were made, display error message
+                    Text("Changes were saved.")
+                }
             }
             .padding([.top],20)
             
@@ -109,11 +177,16 @@ struct UserProfile: View {
         .padding()
         .toolbar {
             ToolbarItem(placement: .topBarTrailing){
-                Image("profile-image-placeholder")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 40, height: 35)
-                    .clipShape(Circle()) // remove white background in Dark mode
+                if UserDefaults.standard.string(forKey: kProfileImage) == "profile-image-placeholder" {
+                    Image("profile-image-placeholder")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width:40, height: 35, alignment: .leading)
+                        .clipShape(Circle())
+                } else {
+                    Image(systemName: UserDefaults.standard.string(forKey: kProfileImage) ?? "nil-coalescing")
+                        .font(.system(size: 25))
+                }
             }
             ToolbarItem(placement: .principal) {
                 Image("Logo")
@@ -123,6 +196,8 @@ struct UserProfile: View {
             }
             ToolbarItem(placement: .topBarLeading) {
                 Button(role: .cancel) {
+                    //  DISMISSING ICON PRESSED ***
+//                    largeImageName = UserDefaults.standard.string(forKey: kProfileImage) ?? "nil-coalescing"
                     dismiss()
                 } label: {
                     Label("", systemImage: "arrow.left")
@@ -139,6 +214,8 @@ struct UserProfile: View {
             specialOffersField = specialOffersDefault
             newsletterField = newsletterDefault
             
+            // ***
+//            largeImageName = largeImageNameDefault ?? "invalid (nil coalescing)"
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
@@ -150,7 +227,6 @@ func CheckFormFieldItem(_ label: String, BoolValue: Binding<Bool>) -> some View 
     Label(label, systemImage: BoolValue.wrappedValue ? "checkmark.square.fill" : "square")
         .onTapGesture {
             BoolValue.wrappedValue.toggle()
-            UserDefaults.standard.set(BoolValue.wrappedValue, forKey: label)
         }
         .font(.LLParagraph)
         .padding(1)
@@ -164,9 +240,6 @@ func FormFieldItem(Section: String, TextValue: Binding<String>) -> some View{
             .foregroundStyle(.form)
             .frame(maxWidth: .infinity, alignment: .leading)
         TextField(text:TextValue, prompt: Text("Enter \(Section)...") .font(.LLHightlight)) {
-        }
-        .onSubmit {
-            UserDefaults.standard.set(TextValue, forKey: TextValue.wrappedValue)
         }
         .textFieldStyle(.roundedBorder)
     }
@@ -210,5 +283,5 @@ struct FilterButtonStyle: ButtonStyle {
 }
 
 #Preview {
-    UserProfile()
+    UserProfile(navProfileImage: .constant(""))
 }

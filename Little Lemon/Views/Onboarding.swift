@@ -17,6 +17,8 @@ let kPasswordChanges = "Password Changes"
 let kSpecialOffers = "Special Offers"
 let kNewsletter = "Newsletter"
 
+let kProfileImage = "Profile Image"
+
 struct Onboarding: View {
     @State var firstName = ""
     @State var lastName = ""
@@ -49,6 +51,7 @@ struct Onboarding: View {
                         UserDefaults.standard.set(firstName, forKey: kFirstName)
                         UserDefaults.standard.set(lastName, forKey: kLastName)
                         UserDefaults.standard.set(email, forKey: kEmail)
+                        UserDefaults.standard.set("profile-image-placeholder", forKey: kProfileImage)
                         UserDefaults.standard.set(false, forKey: kOrderStatus)
                         UserDefaults.standard.set(false, forKey: kPasswordChanges)
                         UserDefaults.standard.set(false, forKey: kSpecialOffers)
