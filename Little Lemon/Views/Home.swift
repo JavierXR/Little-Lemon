@@ -11,8 +11,8 @@ struct Home: View {
     @State var profileTapped = false
     @Environment(\.dismiss) var dismiss
     
-    @State var navProfileImage =  UserDefaults.standard.string(forKey: kProfileImage) ?? "Home.swift error"
-    
+    @State var navProfileImage =  UserDefaults.standard.string(forKey: kProfileImage) ?? "profile-image-placeholder"
+
 
     var body: some View {
         
