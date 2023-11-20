@@ -34,7 +34,8 @@ struct Home: View {
                     Image("profile-image-placeholder")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 40, height: 40)
+                        .frame(width: 40, height: 35)
+                        .clipShape(Circle()) // remove white background in Dark mode
                         .onTapGesture {
                             profileTapped.toggle()
                             print("Image tapped")

@@ -18,8 +18,8 @@ struct MenuButton: View {
             .font(.LLLead)
             .padding([.vertical], 8)
             .padding([.horizontal], 10)
-            .background(toggled ? .primary1 : .primary2)
-            .foregroundColor(toggled ? .highlight1 : .highlight2)
+            .background(toggled ? .primary2 : .primary1)
+            .foregroundColor(toggled ? .highlight2 : .highlight1)
             .clipShape(.buttonBorder) // TODO: Define custom shape with border
             .onTapGesture {
                 toggled.toggle()

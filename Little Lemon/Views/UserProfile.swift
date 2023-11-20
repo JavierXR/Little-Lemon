@@ -10,18 +10,23 @@ import SwiftUI
 struct UserProfile: View {
     @Environment(\.dismiss) var dismiss
     
-    let firstName = UserDefaults.standard.string(forKey: kFirstName)
-    let lastName = UserDefaults.standard.string(forKey: kLastName)
-    let email = UserDefaults.standard.string(forKey: kEmail)
+    let firstNameDefault = UserDefaults.standard.string(forKey: kFirstName)
+    let lastNameDefault = UserDefaults.standard.string(forKey: kLastName)
+    let emailDefault = UserDefaults.standard.string(forKey: kEmail)
     
-    @State var firstNameF = ""
-    @State var lastNameF = ""
-    @State var emailF = ""
+    let orderStatusDefault = UserDefaults.standard.bool(forKey: kOrderStatus)
+    let passwordChangesDefault = UserDefaults.standard.bool(forKey: kPasswordChanges)
+    let specialOffersDefault = UserDefaults.standard.bool(forKey: kSpecialOffers)
+    let newsletterDefault = UserDefaults.standard.bool(forKey: kNewsletter)
     
-    @State var orderStatus = false
-    @State var passwordChanges = false
-    @State var specialOffers = false
-    @State var newsletter = false
+    @State var firstNameField = ""
+    @State var lastNameField = ""
+    @State var emailField = ""
+    
+    @State var orderStatusField = false
+    @State var passwordChangesField = false
+    @State var specialOffersField = false
+    @State var newsletterField = false
     
     var body: some View {
         VStack{
@@ -32,6 +37,7 @@ struct UserProfile: View {
                 Image("profile-image-placeholder")
                     .resizable()
                     .frame(width:75, height: 75, alignment: .leading)
+                    .clipShape(Circle()) // remove white background in Dark mode
                 Button("Change"){
                 }
                 .font(.LLHightlight)
@@ -52,15 +58,15 @@ struct UserProfile: View {
             //            .padding()
             
             Form{
-                FormFieldItem(Section: "First Name", TextValue: $firstNameF)
-                FormFieldItem(Section: "Last Name", TextValue: $lastNameF)
-                FormFieldItem(Section: "Email", TextValue: $emailF)
+                FormFieldItem(Section: "First Name", TextValue: $firstNameField)
+                FormFieldItem(Section: "Last Name", TextValue: $lastNameField)
+                FormFieldItem(Section: "Email", TextValue: $emailField)
                 Text("Email notifications")
                     .font(.LLSectionCategories)
-                CheckFormFieldItem("Order Status", BoolValue: $orderStatus)
-                CheckFormFieldItem("Password Changes", BoolValue: $passwordChanges)
-                CheckFormFieldItem("Special Offers", BoolValue: $specialOffers)
-                CheckFormFieldItem("Newsletter", BoolValue: $newsletter)
+                CheckFormFieldItem("Order Status", BoolValue: $orderStatusField)
+                CheckFormFieldItem("Password Changes", BoolValue: $passwordChangesField)
+                CheckFormFieldItem("Special Offers", BoolValue: $specialOffersField)
+                CheckFormFieldItem("Newsletter", BoolValue: $newsletterField)
             }
             .formStyle(.columns)
             .overlay{
@@ -106,7 +112,8 @@ struct UserProfile: View {
                 Image("profile-image-placeholder")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 40, height: 40)
+                    .frame(width: 40, height: 35)
+                    .clipShape(Circle()) // remove white background in Dark mode
             }
             ToolbarItem(placement: .principal) {
                 Image("Logo")
@@ -124,9 +131,14 @@ struct UserProfile: View {
             }
         }
         .onAppear{
-            firstNameF = firstName ?? ""
-            lastNameF = lastName ?? ""
-            emailF = email ?? ""
+            firstNameField = firstNameDefault ?? ""
+            lastNameField = lastNameDefault ?? ""
+            emailField = emailDefault ?? ""
+            orderStatusField = orderStatusDefault
+            passwordChangesField = passwordChangesDefault
+            specialOffersField = specialOffersDefault
+            newsletterField = newsletterDefault
+            
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
@@ -138,6 +150,7 @@ func CheckFormFieldItem(_ label: String, BoolValue: Binding<Bool>) -> some View 
     Label(label, systemImage: BoolValue.wrappedValue ? "checkmark.square.fill" : "square")
         .onTapGesture {
             BoolValue.wrappedValue.toggle()
+            UserDefaults.standard.set(BoolValue.wrappedValue, forKey: label)
         }
         .font(.LLParagraph)
         .padding(1)

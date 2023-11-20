@@ -14,9 +14,7 @@ struct Menu: View {
     @State var selectedCategories: Set = ["Starters", "Mains", "Desserts", "Drinks"]
     
     func getMenuData() async {
-        
-        //        PersistenceController.shared.clear()
-        
+                
         let url = URL(string: "https://raw.githubusercontent.com/Meta-Mobile-Developer-PC/Working-With-Data-API/main/menu.json")!
         let request = URLRequest(url: url)
         
@@ -136,7 +134,6 @@ struct Menu: View {
             Hero(searchText: $searchText)
                 
             MenuSections(selectedCategories: $selectedCategories)
-                .background(.white)
             
             FetchedObjects(predicate: buildPredicate(), sortDescriptors: buildSortDescriptors()) { (dishes: [Dish]) in
                 List{

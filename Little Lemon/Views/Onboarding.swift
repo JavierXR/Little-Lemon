@@ -12,6 +12,11 @@ let kLastName = "Last Name"
 let kEmail = "Email"
 let kIsLoggedIn = "kIsLoggedIn"
 
+let kOrderStatus = "Order Status"
+let kPasswordChanges = "Password Changes"
+let kSpecialOffers = "Special Offers"
+let kNewsletter = "Newsletter"
+
 struct Onboarding: View {
     @State var firstName = ""
     @State var lastName = ""
@@ -44,6 +49,10 @@ struct Onboarding: View {
                         UserDefaults.standard.set(firstName, forKey: kFirstName)
                         UserDefaults.standard.set(lastName, forKey: kLastName)
                         UserDefaults.standard.set(email, forKey: kEmail)
+                        UserDefaults.standard.set(false, forKey: kOrderStatus)
+                        UserDefaults.standard.set(false, forKey: kPasswordChanges)
+                        UserDefaults.standard.set(false, forKey: kSpecialOffers)
+                        UserDefaults.standard.set(false, forKey: kNewsletter)
                         isLoggedIn = true
                         UserDefaults.standard.set(true, forKey: kIsLoggedIn)
                     }
