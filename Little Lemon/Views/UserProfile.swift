@@ -168,10 +168,7 @@ struct UserProfile: View {
                     
                     // TabView vs. StackView
                     UserDefaults.standard.set(tabViewField, forKey: kNavigationStyle)
-                    tabView = tabViewField
-                    if tabView{
-                        dismiss()
-                    }
+
                     
                     savedAlert.toggle()
                 }
@@ -182,6 +179,15 @@ struct UserProfile: View {
                     isPresented: $savedAlert
                 ) {
                     Button("OK") {
+                        // TODO: Keep User Profile screen from dismissing when disabling TabView navigation
+                        var shouldDismiss = false
+                        if tabViewField && tabView != tabViewField {
+                            shouldDismiss = true
+                        }
+                        tabView = tabViewField
+                        if shouldDismiss{
+                            dismiss()
+                        }
                     }
                 } message: {
                     //TODO: if no changes were made, display error message
