@@ -19,6 +19,7 @@ struct UserProfile: View {
     let passwordChangesDefault = UserDefaults.standard.bool(forKey: kPasswordChanges)
     let specialOffersDefault = UserDefaults.standard.bool(forKey: kSpecialOffers)
     let newsletterDefault = UserDefaults.standard.bool(forKey: kNewsletter)
+    let navigationStyleDefault = UserDefaults.standard.bool(forKey: kNavigationStyle)
     
     @State var firstNameField = ""
     @State var lastNameField = ""
@@ -28,6 +29,7 @@ struct UserProfile: View {
     @State var passwordChangesField = false
     @State var specialOffersField = false
     @State var newsletterField = false
+    @State private var tabViewField = true
     
     @State var discardAlert = false
     @State var savedAlert = false
@@ -37,6 +39,8 @@ struct UserProfile: View {
     @State var largeImageName: String = UserDefaults.standard.string(forKey: kProfileImage) ?? "UserProfile.swift Error"
     
     @Binding var navProfileImage: String
+    
+    @Binding var tabView: Bool
     
     var body: some View {
         VStack{
@@ -92,6 +96,10 @@ struct UserProfile: View {
                 CheckFormFieldItem("Password Changes", BoolValue: $passwordChangesField)
                 CheckFormFieldItem("Special Offers", BoolValue: $specialOffersField)
                 CheckFormFieldItem("Newsletter", BoolValue: $newsletterField)
+                
+                Text("App Settings")
+                    .font(.LLSectionCategories)
+                CheckFormFieldItem("Tab View", BoolValue: $tabViewField)
             }
             .formStyle(.columns)
             .overlay{
@@ -110,6 +118,7 @@ struct UserProfile: View {
                 UserDefaults.standard.set("", forKey: kEmail)
                 
                 UserDefaults.standard.set(false, forKey: kIsLoggedIn)
+                UserDefaults.standard.set(true, forKey: kNavigationStyle)
                 UserDefaults.standard.set("profile-image-placeholder", forKey: kProfileImage)
                 dismiss()
             }
@@ -128,6 +137,9 @@ struct UserProfile: View {
                     passwordChangesField = UserDefaults.standard.bool(forKey: kPasswordChanges)
                     specialOffersField = UserDefaults.standard.bool(forKey: kSpecialOffers)
                     newsletterField = UserDefaults.standard.bool(forKey: kNewsletter)
+                    
+                    tabViewField = UserDefaults.standard.bool(forKey: kNavigationStyle)
+
                     discardAlert.toggle()
                 }
                 .buttonStyle(FilterButtonStyle(padding: 16))
@@ -151,12 +163,15 @@ struct UserProfile: View {
                     UserDefaults.standard.set(passwordChangesField, forKey: kPasswordChanges)
                     UserDefaults.standard.set(specialOffersField, forKey: kSpecialOffers)
                     UserDefaults.standard.set(newsletterField, forKey: kNewsletter)
-                    
-                    //SAVING IMAGE STRING TO DEFAULTS ***
                     UserDefaults.standard.set(largeImageName, forKey: kProfileImage)
-                    
-                    // Prevent icon flash? ***
                     navProfileImage = largeImageName
+                    
+                    // TabView vs. StackView
+                    UserDefaults.standard.set(tabViewField, forKey: kNavigationStyle)
+                    tabView = tabViewField
+                    if tabView{
+                        dismiss()
+                    }
                     
                     savedAlert.toggle()
                 }
@@ -198,8 +213,7 @@ struct UserProfile: View {
             }
             ToolbarItem(placement: .topBarLeading) {
                 Button(role: .cancel) {
-                    //  DISMISSING ICON PRESSED ***
-//                    largeImageName = UserDefaults.standard.string(forKey: kProfileImage) ?? "nil-coalescing"
+                    //  DISMISSING ICON PRESSED
                     dismiss()
                 } label: {
                     Label("", systemImage: "arrow.left")
@@ -215,9 +229,7 @@ struct UserProfile: View {
             passwordChangesField = passwordChangesDefault
             specialOffersField = specialOffersDefault
             newsletterField = newsletterDefault
-            
-            // ***
-//            largeImageName = largeImageNameDefault ?? "invalid (nil coalescing)"
+            tabViewField = navigationStyleDefault
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
@@ -286,6 +298,6 @@ struct FilterButtonStyle: ButtonStyle {
 
 #Preview {
     NavigationStack{
-        UserProfile(navProfileImage: .constant("profile-image-placeholder"))
+        UserProfile(navProfileImage: .constant("profile-image-placeholder"), tabView: .constant(true))
     }
 }

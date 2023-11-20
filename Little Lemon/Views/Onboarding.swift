@@ -19,6 +19,8 @@ let kNewsletter = "Newsletter"
 
 let kProfileImage = "Profile Image"
 
+let kNavigationStyle = "Navigation Style"
+
 struct Onboarding: View {
     @State var firstName = ""
     @State var lastName = ""
@@ -56,6 +58,8 @@ struct Onboarding: View {
                         UserDefaults.standard.set(false, forKey: kPasswordChanges)
                         UserDefaults.standard.set(false, forKey: kSpecialOffers)
                         UserDefaults.standard.set(false, forKey: kNewsletter)
+                        UserDefaults.standard.set(true, forKey: kNavigationStyle)
+                        
                         isLoggedIn = true
                         UserDefaults.standard.set(true, forKey: kIsLoggedIn)
                     }

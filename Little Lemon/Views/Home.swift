@@ -13,24 +13,27 @@ struct Home: View {
     
     @State var navProfileImage =  UserDefaults.standard.string(forKey: kProfileImage) ?? "profile-image-placeholder"
 
-
+    @State var tabNavigationStyle = true
+    @State private var selectedTab = 0
+    
     var body: some View {
         
-        Menu()
+        if tabNavigationStyle {
+            TabView(selection: $selectedTab){
+                Menu()
+                    .tag(0)
+                    .tabItem { Label("Menu", systemImage: "list.dash") }
+                    .environment(\.managedObjectContext, persistence.container.viewContext)
+                UserProfile(navProfileImage: $navProfileImage, tabView: $tabNavigationStyle)
+                    .tag(1)
+                    .tabItem { Label("Profile", systemImage: "square.and.pencil") }
+            }
             .environment(\.managedObjectContext, persistence.container.viewContext)
-            .navigationBarBackButtonHidden(true)
-            .navigationDestination(isPresented: $profileTapped){
-                UserProfile(navProfileImage: $navProfileImage)
-            }
-            .onAppear{                
-                // TODO: Pop to root (onboarding) screen instead of double dismiss().
-                if !UserDefaults.standard.bool(forKey: kIsLoggedIn) {
-                    dismiss()
-                }
-            }
+            .navigationBarBackButtonHidden()
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing){
-
+                    
                     if navProfileImage == "profile-image-placeholder" {
                         Image("profile-image-placeholder")
                             .resizable()
@@ -38,13 +41,13 @@ struct Home: View {
                             .clipShape(Circle())
                             .frame(width:40, height: 35, alignment: .leading)
                             .onTapGesture {
-                                profileTapped.toggle()
+                                selectedTab = 1
                             }
                     } else {
                         Image(systemName: navProfileImage)
                             .font(.system(size: 25))
                             .onTapGesture {
-                                profileTapped.toggle()
+                                selectedTab = 1
                             }
                     }
                     
@@ -56,7 +59,50 @@ struct Home: View {
                         .frame(width: 200, height: 35)
                 }
             }
-            .navigationBarTitleDisplayMode(.inline)
+            
+        } else {
+            Menu()
+                .environment(\.managedObjectContext, persistence.container.viewContext)
+                .navigationBarBackButtonHidden(true)
+                .navigationDestination(isPresented: $profileTapped){
+                    UserProfile(navProfileImage: $navProfileImage, tabView: $tabNavigationStyle)
+                }
+                .onAppear{
+                    // TODO: Pop to root (onboarding) screen instead of double dismiss().
+                    if !UserDefaults.standard.bool(forKey: kIsLoggedIn) {
+                        dismiss()
+                    }
+                }
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing){
+                        
+                        if navProfileImage == "profile-image-placeholder" {
+                            Image("profile-image-placeholder")
+                                .resizable()
+                                .scaledToFit()
+                                .clipShape(Circle())
+                                .frame(width:40, height: 35, alignment: .leading)
+                                .onTapGesture {
+                                    profileTapped.toggle()
+                                }
+                        } else {
+                            Image(systemName: navProfileImage)
+                                .font(.system(size: 25))
+                                .onTapGesture {
+                                    profileTapped.toggle()
+                                }
+                        }
+                        
+                    }
+                    ToolbarItem(placement: .principal) {
+                        Image("Logo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 200, height: 35)
+                    }
+                }
+                .navigationBarTitleDisplayMode(.inline)
+        }
     }
 }
 
