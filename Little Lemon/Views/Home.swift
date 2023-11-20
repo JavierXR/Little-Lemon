@@ -35,8 +35,8 @@ struct Home: View {
                         Image("profile-image-placeholder")
                             .resizable()
                             .scaledToFit()
-                            .frame(width:40, height: 35, alignment: .leading)
                             .clipShape(Circle())
+                            .frame(width:40, height: 35, alignment: .leading)
                             .onTapGesture {
                                 profileTapped.toggle()
                             }

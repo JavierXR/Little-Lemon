@@ -50,8 +50,8 @@ struct UserProfile: View {
                     Image("profile-image-placeholder")
                         .resizable()
                         .scaledToFit()
-                        .frame(width:75, height: 75, alignment: .leading)
                         .clipShape(Circle())
+                        .frame(width:75, height: 75, alignment: .leading)
                 } else {
                     Image(systemName: largeImageName )
                         .resizable()
@@ -69,6 +69,7 @@ struct UserProfile: View {
                 .sheet(isPresented:$showProfilePicker) {
                     ProfileIconPicker(showProfilePicker: $showProfilePicker, largeImageName: $largeImageName)
                 }
+                .padding()
                 Button("Remove"){
                     largeImageName = "person.crop.circle"
                 }
@@ -114,6 +115,7 @@ struct UserProfile: View {
             }
             .buttonStyle(PrimaryButtonStyle())
             .font(.LLHightlight)
+            .padding(.top, 30)
             
             HStack(spacing: 15){
                 Button("Discard changes"){
@@ -181,8 +183,8 @@ struct UserProfile: View {
                     Image("profile-image-placeholder")
                         .resizable()
                         .scaledToFit()
-                        .frame(width:40, height: 35, alignment: .leading)
                         .clipShape(Circle())
+                        .frame(width:40, height: 35, alignment: .leading)
                 } else {
                     Image(systemName: UserDefaults.standard.string(forKey: kProfileImage) ?? "nil-coalescing")
                         .font(.system(size: 25))
@@ -283,5 +285,7 @@ struct FilterButtonStyle: ButtonStyle {
 }
 
 #Preview {
-    UserProfile(navProfileImage: .constant(""))
+    NavigationStack{
+        UserProfile(navProfileImage: .constant("profile-image-placeholder"))
+    }
 }
