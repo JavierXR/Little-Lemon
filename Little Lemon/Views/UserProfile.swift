@@ -124,7 +124,7 @@ struct UserProfile: View {
             }
             .buttonStyle(PrimaryButtonStyle())
             .font(.LLHightlight)
-            .padding(.top, 30)
+            .padding(.top, navigationStyleDefault ? 0 : 30)
             
             HStack(spacing: 15){
                 Button("Discard changes"){

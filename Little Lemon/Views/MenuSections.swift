@@ -30,6 +30,6 @@ struct MenuSections: View{
     }
 }
 
-//#Preview {
-//    MenuSections()
-//}
+#Preview {
+    MenuSections(selectedCategories: .constant(["Starters"]))
+}

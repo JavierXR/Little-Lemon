@@ -15,7 +15,7 @@ struct MenuButton: View {
     
     var body: some View {
         Text(name)
-            .font(.LLLead)
+            .font(.LLSectionCategories)
             .padding([.vertical], 8)
             .padding([.horizontal], 10)
             .background(toggled ? .primary2 : .primary1)
@@ -33,6 +33,6 @@ struct MenuButton: View {
     
 }
 
-//#Preview {
-//    MenuButton(name: "Long button name", selectedCategories: .constant(["d"]) )
-//}
+#Preview {
+    MenuButton(name: "Long button name", selectedCategories: .constant(["Starters"]) )
+}

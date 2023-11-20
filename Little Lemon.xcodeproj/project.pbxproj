@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3B2851262B0AF3E100C7D693 /* ProfileIconPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2851252B0AF3E100C7D693 /* ProfileIconPicker.swift */; };
+		3B472AED2B0C1B5100A47940 /* Karla-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B472AEC2B0C1B5100A47940 /* Karla-ExtraBold.ttf */; };
 		3B4BD7492B08181400C4A009 /* Karla-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B4BD7482B08181400C4A009 /* Karla-Regular.ttf */; };
 		3B4BD74B2B08182700C4A009 /* Karla-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B4BD74A2B08182700C4A009 /* Karla-VariableFont_wght.ttf */; };
 		3B54643D2B067260005C5589 /* MenuItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B54643C2B067260005C5589 /* MenuItemDetailView.swift */; };
@@ -35,6 +36,7 @@
 
 /* Begin PBXFileReference section */
 		3B2851252B0AF3E100C7D693 /* ProfileIconPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileIconPicker.swift; sourceTree = "<group>"; };
+		3B472AEC2B0C1B5100A47940 /* Karla-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Karla-ExtraBold.ttf"; sourceTree = "<group>"; };
 		3B4BD7482B08181400C4A009 /* Karla-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Karla-Regular.ttf"; sourceTree = "<group>"; };
 		3B4BD74A2B08182700C4A009 /* Karla-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Karla-VariableFont_wght.ttf"; sourceTree = "<group>"; };
 		3B54643C2B067260005C5589 /* MenuItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemDetailView.swift; sourceTree = "<group>"; };
@@ -75,8 +77,9 @@
 		3B4BD7472B0817E600C4A009 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				3B4BD74A2B08182700C4A009 /* Karla-VariableFont_wght.ttf */,
 				3B4BD7482B08181400C4A009 /* Karla-Regular.ttf */,
+				3B472AEC2B0C1B5100A47940 /* Karla-ExtraBold.ttf */,
+				3B4BD74A2B08182700C4A009 /* Karla-VariableFont_wght.ttf */,
 				3B5464502B07B2D1005C5589 /* MarkaziText-VariableFont_wght.ttf */,
 				3B5464462B06CF8D005C5589 /* MarkaziText-Bold.ttf */,
 				3B5464452B06CF8D005C5589 /* MarkaziText-Medium.ttf */,
@@ -213,6 +216,7 @@
 				3B5464522B07B47F005C5589 /* MarkaziText-VariableFont_wght.ttf in Resources */,
 				3BD763992B058AB3002689CE /* Preview Assets.xcassets in Resources */,
 				3B54644A2B06CF8E005C5589 /* MarkaziText-Bold.ttf in Resources */,
+				3B472AED2B0C1B5100A47940 /* Karla-ExtraBold.ttf in Resources */,
 				3B54644B2B06CF8E005C5589 /* MarkaziText-Regular.ttf in Resources */,
 				3BD763962B058AB3002689CE /* Assets.xcassets in Resources */,
 				3B4BD74B2B08182700C4A009 /* Karla-VariableFont_wght.ttf in Resources */,

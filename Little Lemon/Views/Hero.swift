@@ -88,7 +88,7 @@ public extension Font {
     }
     /// Karla - Medium - 18
     static var LLLead: Font {
-        let uiFontDescriptor = UIFontDescriptor(fontAttributes: [.name: "Karla-Regular"])
+        let uiFontDescriptor = UIFontDescriptor(fontAttributes: [.name: "Karla-VariableFont_wght"])
         let newUIFont = UIFont(descriptor: uiFontDescriptor, size: 18)
         let font = Font(newUIFont)
             .weight(.medium)
@@ -112,7 +112,7 @@ public extension Font {
     }
     /// Karla - Bold - 18
     static var LLCardTitle: Font {
-        let uiFontDescriptor = UIFontDescriptor(fontAttributes: [.name: "Karla-Regular"])
+        let uiFontDescriptor = UIFontDescriptor(fontAttributes: [.name: "Karla-VariableFont_wght"])
         let newUIFont = UIFont(descriptor: uiFontDescriptor, size: 18)
         let font = Font(newUIFont)
             .bold()
@@ -126,7 +126,7 @@ public extension Font {
     }
     /// Karla - Medium - 16
     static var LLHightlight: Font {
-        let uiFontDescriptor = UIFontDescriptor(fontAttributes: [.name: "Karla-Regular"])
+        let uiFontDescriptor = UIFontDescriptor(fontAttributes: [.name: "Karla-VariableFont_wght"])
         let newUIFont = UIFont(descriptor: uiFontDescriptor, size: 16)
         let font = Font(newUIFont)
             .weight(.medium)
@@ -134,7 +134,7 @@ public extension Font {
     }
     /// Karla - Bold - 20
     static var LLNavBar: Font {
-        let uiFontDescriptor = UIFontDescriptor(fontAttributes: [.name: "Karla-Regular"])
+        let uiFontDescriptor = UIFontDescriptor(fontAttributes: [.name: "Karla-VariableFont_wght"])
         let newUIFont = UIFont(descriptor: uiFontDescriptor, size: 20)
         let font = Font(newUIFont)
             .bold()

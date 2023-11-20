@@ -175,6 +175,8 @@ struct Menu: View {
 }
 
 #Preview {
-    Menu()
-        .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+    NavigationStack{
+        Menu()
+            .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+    }
 }
