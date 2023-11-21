@@ -96,18 +96,16 @@ public extension Font {
     }
     /// Karla - Heavy - 20
     static var LLSectionTitle: Font {
-        let uiFontDescriptor = UIFontDescriptor(fontAttributes: [.name: "Karla-VariableFont_wght"])
+        let uiFontDescriptor = UIFontDescriptor(fontAttributes: [.name: "Karla-ExtraBold"])
         let newUIFont = UIFont(descriptor: uiFontDescriptor, size: 20)
         let font = Font(newUIFont)
-            .weight(.heavy) // TODO: Extra bold (same as heavy?)
         return font
     }
     /// Karla - Heavy - 16
     static var LLSectionCategories: Font {
-        let uiFontDescriptor = UIFontDescriptor(fontAttributes: [.name: "Karla-VariableFont_wght"])
+        let uiFontDescriptor = UIFontDescriptor(fontAttributes: [.name: "Karla-ExtraBold"])
         let newUIFont = UIFont(descriptor: uiFontDescriptor, size: 16)
         let font = Font(newUIFont)
-            .weight(.heavy) // TODO: Extra bold (same as heavy?)
         return font
     }
     /// Karla - Bold - 18

@@ -18,13 +18,14 @@ struct Home: View {
     
     var body: some View {
         
+        // MARK: TabView Navigation
         if tabNavigationStyle {
             TabView(selection: $selectedTab){
                 Menu()
                     .tag(0)
                     .tabItem { Label("Menu", systemImage: "list.dash") }
                     .environment(\.managedObjectContext, persistence.container.viewContext)
-                UserProfile(navProfileImage: $navProfileImage, tabView: $tabNavigationStyle)
+                UserProfile(navProfileImage: $navProfileImage, tabNavigationStyle: $tabNavigationStyle)
                     .tag(1)
                     .tabItem { Label("Profile", systemImage: "square.and.pencil") }
             }
@@ -61,11 +62,12 @@ struct Home: View {
             }
             
         } else {
+            // MARK: NavigationStack Navigation
             Menu()
                 .environment(\.managedObjectContext, persistence.container.viewContext)
                 .navigationBarBackButtonHidden(true)
                 .navigationDestination(isPresented: $profileTapped){
-                    UserProfile(navProfileImage: $navProfileImage, tabView: $tabNavigationStyle)
+                    UserProfile(navProfileImage: $navProfileImage, tabNavigationStyle: $tabNavigationStyle)
                 }
                 .onAppear{
                     // TODO: Pop to root (onboarding) screen instead of double dismiss().
