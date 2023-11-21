@@ -37,7 +37,7 @@ struct Onboarding: View {
                 Form{
                     FormFieldItem(Section: "First Name", TextValue: $firstName)
                     FormFieldItem(Section: "Last Name", TextValue: $lastName)
-                    FormFieldItem(Section: "Email ", TextValue: $email)
+                    FormFieldItem(Section: "Email", TextValue: $email)
                 }
                 .formStyle(.columns)
                 .padding()

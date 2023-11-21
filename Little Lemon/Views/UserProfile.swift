@@ -11,8 +11,6 @@ struct FormData {
     var firstNameDefault = UserDefaults.standard.string(forKey: kFirstName) ?? "FormData Error"
     var lastNameDefault = UserDefaults.standard.string(forKey: kLastName) ?? "FormData Error"
     var emailDefault = UserDefaults.standard.string(forKey: kEmail) ?? "FormData Error"
-    var profileDefault = UserDefaults.standard.string(forKey: kEmail) ?? "FormData Error"
-
     
     var orderStatusDefault = UserDefaults.standard.bool(forKey: kOrderStatus)
     var passwordChangesDefault = UserDefaults.standard.bool(forKey: kPasswordChanges)
@@ -25,8 +23,6 @@ struct FormData {
 
 struct UserProfile: View {
     @Environment(\.dismiss) var dismiss
-
-    let largeImageNameDefault = UserDefaults.standard.string(forKey: kProfileImage)
     
     @State var formData = FormData()
     @State var showProfilePicker = false
@@ -64,6 +60,7 @@ struct UserProfile: View {
             
             // Logout by dismissing current view. TODO: Dismiss directly to Onboarding screen when Navigation Stack mode active
             Button("Logout"){
+                UserDefaults.standard.set("profile-image-placeholder", forKey: kProfileImage)
                 UserDefaults.standard.set(false, forKey: kIsLoggedIn)
                 dismiss()
             }
@@ -101,7 +98,6 @@ struct UserProfile: View {
                     
                     // Update alert binding present alert
                     savedAlert.toggle()
-//                    tabNavigationStyle = formData.tabViewDefault
                     
                 }
                 .buttonStyle(FilterButtonStyle(padding: 16))
@@ -187,7 +183,6 @@ struct UserProfile: View {
         UserDefaults.standard.set(formData.firstNameDefault, forKey: kFirstName)
         UserDefaults.standard.set(formData.lastNameDefault, forKey: kLastName)
         UserDefaults.standard.set(formData.emailDefault, forKey: kEmail)
-//        UserDefaults.standard.set(formData.profileDefault,forKey: kProfileImage) // TODO: issue?
         UserDefaults.standard.set(formData.orderStatusDefault, forKey: kOrderStatus)
         UserDefaults.standard.set(formData.passwordChangesDefault, forKey: kPasswordChanges)
         UserDefaults.standard.set(formData.specialOffersDefault, forKey: kSpecialOffers)
