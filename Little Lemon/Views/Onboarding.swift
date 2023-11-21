@@ -39,11 +39,8 @@ struct Onboarding: View {
                     FormFieldItem(Section: "Last Name", TextValue: $lastName)
                     FormFieldItem(Section: "Email ", TextValue: $email)
                 }
-                .font(.LLLead)
                 .formStyle(.columns)
-                .textFieldStyle(.roundedBorder)
                 .padding()
-                .layoutPriority(1)
                 
                 Button("Register") {
                     // TODO: Add email validation (inline?)
@@ -79,10 +76,7 @@ struct Onboarding: View {
             }
             .toolbar{
                 ToolbarItem(placement: .principal) {
-                    Image("Logo")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 200, height: 35)
+                    NavigationLogo()
                 }
             }
             .navigationBarTitleDisplayMode(.inline)

@@ -18,6 +18,12 @@
 		3B54644B2B06CF8E005C5589 /* MarkaziText-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B5464472B06CF8D005C5589 /* MarkaziText-Regular.ttf */; };
 		3B54644C2B06CF8E005C5589 /* MarkaziText-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B5464482B06CF8D005C5589 /* MarkaziText-SemiBold.ttf */; };
 		3B5464522B07B47F005C5589 /* MarkaziText-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B5464502B07B2D1005C5589 /* MarkaziText-VariableFont_wght.ttf */; };
+		3B58EE692B0CFEC600D4F4E3 /* Font+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B58EE682B0CFEC600D4F4E3 /* Font+Helper.swift */; };
+		3B58EE6B2B0CFF4E00D4F4E3 /* ButtonStyle+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B58EE6A2B0CFF4E00D4F4E3 /* ButtonStyle+Helper.swift */; };
+		3B58EE6D2B0D06BE00D4F4E3 /* FormField+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B58EE6C2B0D06BE00D4F4E3 /* FormField+Helper.swift */; };
+		3B58EE6F2B0D094C00D4F4E3 /* LargeProfileIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B58EE6E2B0D094C00D4F4E3 /* LargeProfileIcon.swift */; };
+		3B58EE712B0D16C100D4F4E3 /* ProfileImageEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B58EE702B0D16C100D4F4E3 /* ProfileImageEditor.swift */; };
+		3B58EE772B0D351400D4F4E3 /* NavigationLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B58EE762B0D351400D4F4E3 /* NavigationLogo.swift */; };
 		3BA1F9E12B058D1900E78787 /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA1F9E02B058D1900E78787 /* Onboarding.swift */; };
 		3BA1F9E32B058EFD00E78787 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA1F9E22B058EFC00E78787 /* Home.swift */; };
 		3BA1F9E52B058F1800E78787 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA1F9E42B058F1800E78787 /* Menu.swift */; };
@@ -46,6 +52,12 @@
 		3B5464472B06CF8D005C5589 /* MarkaziText-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MarkaziText-Regular.ttf"; sourceTree = "<group>"; };
 		3B5464482B06CF8D005C5589 /* MarkaziText-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MarkaziText-SemiBold.ttf"; sourceTree = "<group>"; };
 		3B5464502B07B2D1005C5589 /* MarkaziText-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MarkaziText-VariableFont_wght.ttf"; sourceTree = "<group>"; };
+		3B58EE682B0CFEC600D4F4E3 /* Font+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Helper.swift"; sourceTree = "<group>"; };
+		3B58EE6A2B0CFF4E00D4F4E3 /* ButtonStyle+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ButtonStyle+Helper.swift"; sourceTree = "<group>"; };
+		3B58EE6C2B0D06BE00D4F4E3 /* FormField+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FormField+Helper.swift"; sourceTree = "<group>"; };
+		3B58EE6E2B0D094C00D4F4E3 /* LargeProfileIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeProfileIcon.swift; sourceTree = "<group>"; };
+		3B58EE702B0D16C100D4F4E3 /* ProfileImageEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageEditor.swift; sourceTree = "<group>"; };
+		3B58EE762B0D351400D4F4E3 /* NavigationLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationLogo.swift; sourceTree = "<group>"; };
 		3BA1F9E02B058D1900E78787 /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		3BA1F9E22B058EFC00E78787 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		3BA1F9E42B058F1800E78787 /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
@@ -96,10 +108,13 @@
 				3BFB403F2B084A100098BB58 /* MenuButton.swift */,
 				3BFB403D2B082DDD0098BB58 /* MenuSections.swift */,
 				3BA1F9E02B058D1900E78787 /* Onboarding.swift */,
+				3B58EE762B0D351400D4F4E3 /* NavigationLogo.swift */,
 				3BA1F9E62B05905D00E78787 /* UserProfile.swift */,
+				3B58EE6E2B0D094C00D4F4E3 /* LargeProfileIcon.swift */,
 				3BA1F9E22B058EFC00E78787 /* Home.swift */,
 				3BA1F9E42B058F1800E78787 /* Menu.swift */,
 				3B5464402B06C519005C5589 /* Hero.swift */,
+				3B58EE702B0D16C100D4F4E3 /* ProfileImageEditor.swift */,
 				3B54643C2B067260005C5589 /* MenuItemDetailView.swift */,
 			);
 			path = Views;
@@ -115,6 +130,16 @@
 				3BA1F9EE2B0658B800E78787 /* MenuItem.swift */,
 			);
 			path = "Core Data";
+			sourceTree = "<group>";
+		};
+		3B58EE652B0CFE7400D4F4E3 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				3B58EE682B0CFEC600D4F4E3 /* Font+Helper.swift */,
+				3B58EE6A2B0CFF4E00D4F4E3 /* ButtonStyle+Helper.swift */,
+				3B58EE6C2B0D06BE00D4F4E3 /* FormField+Helper.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		3BD763852B058AB2002689CE = {
@@ -140,6 +165,7 @@
 				3B4BD7472B0817E600C4A009 /* Fonts */,
 				3B54643E2B06A80F005C5589 /* Views */,
 				3B54643F2B06A83A005C5589 /* Core Data */,
+				3B58EE652B0CFE7400D4F4E3 /* Helpers */,
 				3BD763952B058AB3002689CE /* Assets.xcassets */,
 				3BD763972B058AB3002689CE /* Preview Content */,
 			);
@@ -233,6 +259,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3BA1F9E12B058D1900E78787 /* Onboarding.swift in Sources */,
+				3B58EE712B0D16C100D4F4E3 /* ProfileImageEditor.swift in Sources */,
 				3BA1F9E32B058EFD00E78787 /* Home.swift in Sources */,
 				3BFB40402B084A100098BB58 /* MenuButton.swift in Sources */,
 				3BA1F9ED2B0658AD00E78787 /* MenuList.swift in Sources */,
@@ -241,11 +268,16 @@
 				3BFB403E2B082DDD0098BB58 /* MenuSections.swift in Sources */,
 				3BA1F9F22B065E3500E78787 /* ExampleDatabase.xcdatamodeld in Sources */,
 				3BA1F9E72B05905D00E78787 /* UserProfile.swift in Sources */,
+				3B58EE6B2B0CFF4E00D4F4E3 /* ButtonStyle+Helper.swift in Sources */,
+				3B58EE772B0D351400D4F4E3 /* NavigationLogo.swift in Sources */,
+				3B58EE6D2B0D06BE00D4F4E3 /* FormField+Helper.swift in Sources */,
 				3B54643D2B067260005C5589 /* MenuItemDetailView.swift in Sources */,
 				3BA1F9EF2B0658B800E78787 /* MenuItem.swift in Sources */,
+				3B58EE6F2B0D094C00D4F4E3 /* LargeProfileIcon.swift in Sources */,
 				3BA1F9E52B058F1800E78787 /* Menu.swift in Sources */,
 				3B2851262B0AF3E100C7D693 /* ProfileIconPicker.swift in Sources */,
 				3BD763922B058AB2002689CE /* Little_LemonApp.swift in Sources */,
+				3B58EE692B0CFEC600D4F4E3 /* Font+Helper.swift in Sources */,
 				3B5464412B06C519005C5589 /* Hero.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

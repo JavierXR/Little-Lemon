@@ -5,7 +5,7 @@
 //  Created by Javier Brito on 11/15/23.
 //
 
-// TODO: Refactor code -> helper/util file -> more comments -> Unit Tests -> current TODO's
+// TODO:  more comments -> Unit Tests -> current TODO's
 
 import SwiftUI
 

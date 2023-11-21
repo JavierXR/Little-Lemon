@@ -11,6 +11,8 @@ struct FormData {
     var firstNameDefault = UserDefaults.standard.string(forKey: kFirstName) ?? "FormData Error"
     var lastNameDefault = UserDefaults.standard.string(forKey: kLastName) ?? "FormData Error"
     var emailDefault = UserDefaults.standard.string(forKey: kEmail) ?? "FormData Error"
+    var profileDefault = UserDefaults.standard.string(forKey: kEmail) ?? "FormData Error"
+
     
     var orderStatusDefault = UserDefaults.standard.bool(forKey: kOrderStatus)
     var passwordChangesDefault = UserDefaults.standard.bool(forKey: kPasswordChanges)
@@ -27,8 +29,6 @@ struct UserProfile: View {
     let largeImageNameDefault = UserDefaults.standard.string(forKey: kProfileImage)
     
     @State var formData = FormData()
-    
-    // TODO: move to formData like struct?
     @State var showProfilePicker = false
     @State var discardAlert = false
     @State var savedAlert = false
@@ -42,58 +42,13 @@ struct UserProfile: View {
             Text("Personal Information")
                 .font(.LLLead)
                 .frame(maxWidth: .infinity, alignment: .leading)
-            HStack{
-                
-                // LARGE PROFILE IMAGE/ICON *
-                if largeImageName == "profile-image-placeholder" {
-                    Image("profile-image-placeholder")
-                        .resizable()
-                        .scaledToFit()
-                        .clipShape(Circle())
-                        .frame(width:75, height: 75, alignment: .leading)
-                } else {
-                    Image(systemName: largeImageName )
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width:75, height: 75, alignment: .leading)
-                }
-                Button("Change"){
-                    showProfilePicker = true
-                }
-                .font(.LLHightlight)
-                .padding()
-                .foregroundStyle(.highlight1)
-                .background(.primary1)
-                .clipShape(.buttonBorder)
-                .sheet(isPresented:$showProfilePicker) {
-                    ProfileIconPicker(showProfilePicker: $showProfilePicker, largeImageName: $largeImageName)
-                }
-                .padding()
-                Button("Remove"){
-                    largeImageName = "person.crop.circle"
-                }
-                .font(.LLHightlight)
-                .padding()
-                .foregroundStyle(.primary1)
-                .background(.highlight1)
-                .clipShape(.buttonBorder)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
             
+            // Profile Image editor
+            ProfileImageEditor(largeImageName: $largeImageName, showProfilePicker: $showProfilePicker)
+            
+            // Displays an editable Form Field
             Form{
-                FormFieldItem(Section: "First Name", TextValue: $formData.firstNameDefault)
-                FormFieldItem(Section: "Last Name", TextValue: $formData.lastNameDefault)
-                FormFieldItem(Section: "Email", TextValue: $formData.emailDefault)
-                Text("Email notifications")
-                    .font(.LLSectionCategories)
-                CheckFormFieldItem("Order Status", BoolValue: $formData.orderStatusDefault)
-                CheckFormFieldItem("Password Changes", BoolValue: $formData.passwordChangesDefault)
-                CheckFormFieldItem("Special Offers", BoolValue: $formData.specialOffersDefault)
-                CheckFormFieldItem("Newsletter", BoolValue: $formData.newsletterDefault)
-                
-                Text("App Settings")
-                    .font(.LLSectionCategories)
-                CheckFormFieldItem("Tab View", BoolValue: $formData.tabViewDefault)
+                populateFormField()
             }
             .formStyle(.columns)
             .overlay{
@@ -106,14 +61,10 @@ struct UserProfile: View {
                     .rotationEffect(.degrees(45))
                     .transformEffect(.init(translationX: 0, y: 50))
             }
+            
+            // Logout by dismissing current view. TODO: Dismiss directly to Onboarding screen when Navigation Stack mode active
             Button("Logout"){
-                UserDefaults.standard.set("", forKey: kFirstName)
-                UserDefaults.standard.set("", forKey: kLastName)
-                UserDefaults.standard.set("", forKey: kEmail)
-                
                 UserDefaults.standard.set(false, forKey: kIsLoggedIn)
-                UserDefaults.standard.set(true, forKey: kNavigationStyle)
-                UserDefaults.standard.set("profile-image-placeholder", forKey: kProfileImage)
                 dismiss()
             }
             .buttonStyle(PrimaryButtonStyle())
@@ -122,18 +73,7 @@ struct UserProfile: View {
             
             HStack(spacing: 15){
                 Button("Discard changes"){
-                    formData.firstNameDefault = UserDefaults.standard.string(forKey: kFirstName) ?? ""
-                    formData.lastNameDefault = UserDefaults.standard.string(forKey: kLastName) ?? ""
-                    formData.emailDefault = UserDefaults.standard.string(forKey: kEmail) ?? ""
-                    largeImageName = UserDefaults.standard.string(forKey: kProfileImage) ?? "nil-coalescing"
-                    
-                    formData.orderStatusDefault = UserDefaults.standard.bool(forKey: kOrderStatus)
-                    formData.passwordChangesDefault = UserDefaults.standard.bool(forKey: kPasswordChanges)
-                    formData.specialOffersDefault = UserDefaults.standard.bool(forKey: kSpecialOffers)
-                    formData.newsletterDefault = UserDefaults.standard.bool(forKey: kNewsletter)
-                    
-                    formData.tabViewDefault = UserDefaults.standard.bool(forKey: kNavigationStyle)
-
+                    discardFormChanges()
                     discardAlert.toggle()
                 }
                 .buttonStyle(FilterButtonStyle(padding: 16))
@@ -150,30 +90,19 @@ struct UserProfile: View {
                 }
                 
                 Button("Save changes"){
-                    UserDefaults.standard.set(formData.firstNameDefault, forKey: kFirstName)
-                    UserDefaults.standard.set(formData.lastNameDefault, forKey: kLastName)
-                    UserDefaults.standard.set(formData.emailDefault, forKey: kEmail)
-                    UserDefaults.standard.set(formData.orderStatusDefault, forKey: kOrderStatus)
-                    UserDefaults.standard.set(formData.passwordChangesDefault, forKey: kPasswordChanges)
-                    UserDefaults.standard.set(formData.specialOffersDefault, forKey: kSpecialOffers)
-                    UserDefaults.standard.set(formData.newsletterDefault, forKey: kNewsletter)
-                    UserDefaults.standard.set(largeImageName, forKey: kProfileImage)
+                    // Save changes to User Defaults
+                    saveUserDefaults()
+                    
+                    // Update navProfileImage binding
                     navProfileImage = largeImageName
                     
                     // TabView vs. StackView
                     UserDefaults.standard.set(formData.tabViewDefault, forKey: kNavigationStyle)
                     
-                    var shouldDismiss = false
-                    if formData.tabViewDefault && tabNavigationStyle != formData.tabViewDefault {
-                        shouldDismiss = true
-                    }
-                    tabNavigationStyle = formData.tabViewDefault
-
-                    if shouldDismiss{
-                            dismiss()
-                    }
-                    
+                    // Update alert binding present alert
                     savedAlert.toggle()
+//                    tabNavigationStyle = formData.tabViewDefault
+                    
                 }
                 .buttonStyle(FilterButtonStyle(padding: 16))
                 .font(.LLHightlight)
@@ -183,7 +112,16 @@ struct UserProfile: View {
                 ) {
                     Button("OK") {
                         // TODO: Keep User Profile screen from dismissing when disabling TabView navigation
+                            var shouldDismiss = false
+                            if formData.tabViewDefault && tabNavigationStyle != formData.tabViewDefault {
+                                shouldDismiss = true
+                            }
+                            
+                            tabNavigationStyle = formData.tabViewDefault
 
+                            if shouldDismiss{
+                                dismiss()
+                            }
                     }
                 } message: {
                     //TODO: if no changes were made, display error message
@@ -195,6 +133,7 @@ struct UserProfile: View {
         } // End main VStack
         .padding()
         .toolbar {
+            // Trailing Profile Image Icon
             ToolbarItem(placement: .topBarTrailing){
                 if UserDefaults.standard.string(forKey: kProfileImage) == "profile-image-placeholder" {
                     Image("profile-image-placeholder")
@@ -207,15 +146,13 @@ struct UserProfile: View {
                         .font(.system(size: 25))
                 }
             }
+            // Centered Logo ToolbarItem
             ToolbarItem(placement: .principal) {
-                Image("Logo")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 200, height: 35)
+                NavigationLogo()
             }
+            // Leading "Back" ToolbarItem
             ToolbarItem(placement: .topBarLeading) {
                 Button(role: .cancel) {
-                    //  DISMISSING ICON PRESSED
                     dismiss()
                 } label: {
                     Label("", systemImage: "arrow.left")
@@ -224,80 +161,58 @@ struct UserProfile: View {
             }
         }
         .onAppear{
-            formData.firstNameDefault = UserDefaults.standard.string(forKey: kFirstName) ?? ""
-            formData.lastNameDefault = UserDefaults.standard.string(forKey: kLastName) ?? ""
-            formData.emailDefault = UserDefaults.standard.string(forKey: kEmail) ?? ""
-            largeImageName = UserDefaults.standard.string(forKey: kProfileImage) ?? "nil-coalescing"
-            
-            formData.orderStatusDefault = UserDefaults.standard.bool(forKey: kOrderStatus)
-            formData.passwordChangesDefault = UserDefaults.standard.bool(forKey: kPasswordChanges)
-            formData.specialOffersDefault = UserDefaults.standard.bool(forKey: kSpecialOffers)
-            formData.newsletterDefault = UserDefaults.standard.bool(forKey: kNewsletter)
-            
-            formData.tabViewDefault = UserDefaults.standard.bool(forKey: kNavigationStyle)
+               discardFormChanges()
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
     } // End body
     
-}
-
-func CheckFormFieldItem(_ label: String, BoolValue: Binding<Bool>) -> some View {
-    Label(label, systemImage: BoolValue.wrappedValue ? "checkmark.square.fill" : "square")
-        .onTapGesture {
-            BoolValue.wrappedValue.toggle()
-        }
-        .font(.LLParagraph)
-        .padding(1)
-}
-
-func FormFieldItem(Section: String, TextValue: Binding<String>) -> some View{
-    // TODO: Font for entered text?
-    VStack{
-        Text(Section)
-            .font(.LLSectionCategories)
-            .foregroundStyle(.form)
-            .frame(maxWidth: .infinity, alignment: .leading)
-        TextField(text:TextValue, prompt: Text("Enter \(Section)...") .font(.LLHightlight)) {
-        }
-        .textFieldStyle(.roundedBorder)
+    /// Discards all changes by reverting formData to UserDefaults
+    func discardFormChanges() {
+        formData.firstNameDefault = UserDefaults.standard.string(forKey: kFirstName) ?? ""
+        formData.lastNameDefault = UserDefaults.standard.string(forKey: kLastName) ?? ""
+        formData.emailDefault = UserDefaults.standard.string(forKey: kEmail) ?? ""
+        largeImageName = UserDefaults.standard.string(forKey: kProfileImage) ?? "nil-coalescing"
+        
+        formData.orderStatusDefault = UserDefaults.standard.bool(forKey: kOrderStatus)
+        formData.passwordChangesDefault = UserDefaults.standard.bool(forKey: kPasswordChanges)
+        formData.specialOffersDefault = UserDefaults.standard.bool(forKey: kSpecialOffers)
+        formData.newsletterDefault = UserDefaults.standard.bool(forKey: kNewsletter)
+        
+        formData.tabViewDefault = UserDefaults.standard.bool(forKey: kNavigationStyle)
     }
-    .padding([.vertical], 2)
-}
-
-struct PrimaryButtonStyle: ButtonStyle {
-    let height: CGFloat = 40
-    func makeBody(configuration: Self.Configuration) -> some View {
-        configuration.label
-            .frame(maxWidth: .infinity, minHeight: height, maxHeight: height)
-            .background(configuration.isPressed ? .primary1 : .primary2)
-            .cornerRadius(16)
-    }
-}
-
-struct SecondaryButtonStyle: ButtonStyle {
-    let height: CGFloat = 40
-    let padding: CGFloat
     
-    func makeBody(configuration: Self.Configuration) -> some View {
-        configuration.label
-            .padding([.horizontal],padding)
-            .frame(minWidth: height, minHeight: height)
-            .background(configuration.isPressed ? .primary2 : .primary1)
-            .cornerRadius(height/2)
+    /// Saves UserDefaults values
+    func saveUserDefaults(){
+        UserDefaults.standard.set(formData.firstNameDefault, forKey: kFirstName)
+        UserDefaults.standard.set(formData.lastNameDefault, forKey: kLastName)
+        UserDefaults.standard.set(formData.emailDefault, forKey: kEmail)
+//        UserDefaults.standard.set(formData.profileDefault,forKey: kProfileImage) // TODO: issue?
+        UserDefaults.standard.set(formData.orderStatusDefault, forKey: kOrderStatus)
+        UserDefaults.standard.set(formData.passwordChangesDefault, forKey: kPasswordChanges)
+        UserDefaults.standard.set(formData.specialOffersDefault, forKey: kSpecialOffers)
+        UserDefaults.standard.set(formData.newsletterDefault, forKey: kNewsletter)
+        UserDefaults.standard.set(largeImageName, forKey: kProfileImage)
     }
-}
-
-struct FilterButtonStyle: ButtonStyle {
-    let height: CGFloat = 40
-    let padding: CGFloat
     
-    func makeBody(configuration: Self.Configuration) -> some View {
-        configuration.label
-            .padding([.horizontal],padding)
-            .frame(minWidth: height, minHeight: height)
-            .background(configuration.isPressed ? .primary1 : .primary2)
-            .cornerRadius(16)
+    /// Populates the form with FormFieldItem's and CheckmarkFormFieldItem's
+    func populateFormField() -> some View{
+        Group {
+            FormFieldItem(Section: "First Name", TextValue: $formData.firstNameDefault)
+            FormFieldItem(Section: "Last Name", TextValue: $formData.lastNameDefault)
+            FormFieldItem(Section: "Email", TextValue: $formData.emailDefault)
+            
+            Text("Email notifications")
+                .font(.LLSectionCategories)
+            CheckmarkFormFieldItem("Order Status", BoolValue: $formData.orderStatusDefault)
+            CheckmarkFormFieldItem("Password Changes", BoolValue: $formData.passwordChangesDefault)
+            CheckmarkFormFieldItem("Special Offers", BoolValue: $formData.specialOffersDefault)
+            CheckmarkFormFieldItem("Newsletter", BoolValue: $formData.newsletterDefault)
+            
+            Text("App Settings")
+                .font(.LLSectionCategories)
+            CheckmarkFormFieldItem("Tab View", BoolValue: $formData.tabViewDefault)
+        }
     }
 }
 
