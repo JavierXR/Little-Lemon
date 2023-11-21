@@ -5,7 +5,7 @@
 //  Created by Javier Brito on 11/15/23.
 //
 
-// TODO:  more comments -> Unit Tests -> current TODO's
+// TODO:  Verify Minimum iOS Version -> more comments -> Unit Tests -> current TODO's
 
 import SwiftUI
 

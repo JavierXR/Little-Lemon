@@ -17,6 +17,7 @@ struct MenuSections: View{
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .font(.LLSectionTitle)
             HStack{
+                // TODO: Segmented control (Toggle)
                 MenuButton(name: "Starters", selectedCategories: $selectedCategories)
                 MenuButton(name: "Mains", selectedCategories: $selectedCategories)
                 MenuButton(name: "Desserts", selectedCategories: $selectedCategories)
