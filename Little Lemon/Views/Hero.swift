@@ -52,7 +52,7 @@ struct Hero: View {
                         .font(.LLLead) // verify
                         .padding()
                         .background(.highlight1)
-                        .clipShape(.buttonBorder)
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
                         .padding(.bottom, 8)
                 }
 

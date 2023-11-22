@@ -13,7 +13,8 @@ struct Home: View {
     
     @State var navProfileImage =  UserDefaults.standard.string(forKey: kProfileImage) ?? "profile-image-placeholder"
     
-    @State var tabNavigationStyle = true
+    @State var tabNavigationStyle = UserDefaults.standard.bool(forKey: kNavigationStyle)
+    
     @State var selectedTab = 0
     
     var body: some View {

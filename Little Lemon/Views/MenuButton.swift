@@ -20,8 +20,8 @@ struct MenuButton: View {
             .padding([.horizontal], 10)
             .background(toggled ? .primary2 : .primary1)
             .foregroundColor(toggled ? .highlight2 : .highlight1)
-            .clipShape(.buttonBorder) // TODO: Define custom shape with border
-            .onTapGesture {
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .onTapGesture{
                 toggled.toggle()
                 if toggled {
                     selectedCategories.insert(name)

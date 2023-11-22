@@ -31,19 +31,6 @@ struct SecondaryButtonStyle: ButtonStyle {
     }
 }
 
-struct FilterButtonStyle: ButtonStyle {
-    let height: CGFloat = 40
-    let padding: CGFloat
-    
-    func makeBody(configuration: Self.Configuration) -> some View {
-        configuration.label
-            .padding([.horizontal],padding)
-            .frame(minWidth: height, minHeight: height)
-            .background(configuration.isPressed ? .primary1 : .primary2)
-            .cornerRadius(16)
-    }
-}
-
 struct ChangeButtonStyle: ButtonStyle {
     let height: CGFloat = 40
     let padding: CGFloat

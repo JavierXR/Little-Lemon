@@ -73,7 +73,7 @@ struct UserProfile: View {
                     discardFormChanges()
                     discardAlert.toggle()
                 }
-                .buttonStyle(FilterButtonStyle(padding: 16))
+                .buttonStyle(PrimaryButtonStyle())
                 .font(.LLHightlight)
                 .alert(
                     "Success",
@@ -100,7 +100,7 @@ struct UserProfile: View {
                     savedAlert.toggle()
                     
                 }
-                .buttonStyle(FilterButtonStyle(padding: 16))
+                .buttonStyle(PrimaryButtonStyle())
                 .font(.LLHightlight)
                 .alert(
                     "Success",
